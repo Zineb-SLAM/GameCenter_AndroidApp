@@ -73,14 +73,21 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray contacts = jsonObj.getJSONArray("contacts");
 
                     // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
+                    for (int i = 0; i < contacts.length(); i++)
+                    {
                         JSONObject c = contacts.getJSONObject(i);
 
                         String id = c.getString("id");
                         String name = c.getString("name");
-                        String email = c.getString("email");
-                        String address = c.getString("address");
-                        String gender = c.getString("gender");
+                        String maingenre = c.getString("maingenre");
+                        String publisher = c.getString("publisherid");
+                        String agemin = c.getString("agemin");
+                        String console = c.getString("consoleid");
+                        String date = c.getString("releasedate");
+                        String price = c.getString("price");
+                        String quantity = c.getString("quantity");
+                        String description = c.getString("description");
+
 
                         // Phone node is JSON Object
                         JSONObject phone = c.getJSONObject("phone");
