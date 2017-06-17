@@ -1,4 +1,6 @@
+
 package com.example.zineb.game_center;
+
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv;
 
     // URL to get contacts JSON
-    private static String url = "http://api.androidhive.info/contacts/";
+    private static String url = "http://10.0.2.2:8080/GameCenter/web-services/products";
 
-    ArrayList<HashMap<String, String>> contactList;
+    ArrayList<HashMap<String, String>> productstList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contactList = new ArrayList<>();
+        productstList = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
 
@@ -70,42 +72,39 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("contacts");
+                    JSONArray products = jsonObj.getJSONArray("products");
 
                     // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++)
+                    for (int i = 0; i < products.length(); i++)
                     {
-                        JSONObject c = contacts.getJSONObject(i);
+                        JSONObject c = products.getJSONObject(i);
 
-                        String id = c.getString("id");
                         String name = c.getString("name");
                         String maingenre = c.getString("maingenre");
-                        String publisher = c.getString("publisherid");
+                        String publisher = c.getString("publisher");
+                        String console = c.getString("console");
                         String agemin = c.getString("agemin");
-                        String console = c.getString("consoleid");
-                        String date = c.getString("releasedate");
+                        String releasedate = c.getString("releasedate");
                         String price = c.getString("price");
-                        String quantity = c.getString("quantity");
                         String description = c.getString("description");
-
-
-                        // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
 
                         // tmp hash map for single contact
                         HashMap<String, String> contact = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        contact.put("id", id);
                         contact.put("name", name);
-                        contact.put("email", email);
-                        contact.put("mobile", mobile);
+                        contact.put("maingenre", maingenre);
+                        contact.put("publisher", publisher);
+                        contact.put("console", console);
+                        contact.put("agemin", agemin);
+                        contact.put("releasedate", releasedate);
+                        contact.put("price", price);
+                        contact.put("description", description);
+
+
 
                         // adding contact to contact list
-                        contactList.add(contact);
+                        productstList.add(contact);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -147,10 +146,10 @@ public class MainActivity extends AppCompatActivity {
              * Updating parsed JSON data into ListView
              * */
             ListAdapter adapter = new SimpleAdapter(
-                    MainActivity.this, contactList,
-                    R.layout.list_item, new String[]{"name", "email",
-                    "mobile"}, new int[]{R.id.name,
-                    R.id.email, R.id.mobile});
+                    MainActivity.this, productstList,
+                    R.layout.list_item, new String[]{"name", "maingenre",
+                    "publisher", "console", "agemin", "releasedate", "price", "description"}, new int[]{R.id.name,
+                    R.id.maingenre, R.id.publisher, R.id.console, R.id.agemin, R.id.releasedate, R.id.price, R.id.description});
 
             lv.setAdapter(adapter);
         }
