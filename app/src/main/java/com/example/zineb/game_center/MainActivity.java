@@ -14,12 +14,13 @@ import android.widget.Toast;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Response from url: " + jsonStr);
 
             if (jsonStr != null) {
-                try {
+                //try {
                     //JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
@@ -87,18 +88,18 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // looping through All Contacts
-                    for (int i = 0; i < products.length(); i++)
+                    for (int i = 0; i < products.size(); i++)
                     {
-                        JSONObject c = products.getJSONObject(i);
+                        JSONObject c = (JSONObject)products.get(i);
 
-                        String name = c.getString("name");
-                        String maingenre = c.getString("maingenre");
-                        String publisher = c.getString("publisher");
-                        String console = c.getString("console");
-                        String agemin = c.getString("agemin");
-                        String releasedate = c.getString("releasedate");
-                        String price = c.getString("price");
-                        String description = c.getString("description");
+                        String name = String.valueOf(c.get("name"));
+                        String maingenre = String.valueOf(c.get("maingenre"));
+                        String publisher = String.valueOf(c.get("publisher"));
+                        String console = String.valueOf(c.get("console"));
+                        String agemin = String.valueOf(c.get("agemin"));
+                        String releasedate = String.valueOf(c.get("releasedate"));
+                        String price = String.valueOf(c.get("price"));
+                        String description = String.valueOf(c.get("description"));
 
                         // tmp hash map for single contact
                         HashMap<String, String> contact = new HashMap<>();
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         // adding contact to contact list
                         productstList.add(contact);
                     }
-                } catch (final JSONException e) {
+                /*} catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                }
+                }*/
             } else {
                 Log.e(TAG, "Couldn't get json from server.");
                 runOnUiThread(new Runnable() {
