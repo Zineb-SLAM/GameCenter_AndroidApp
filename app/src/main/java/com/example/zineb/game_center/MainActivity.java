@@ -11,9 +11,13 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,10 +73,18 @@ public class MainActivity extends AppCompatActivity {
 
             if (jsonStr != null) {
                 try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    //JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    JSONArray products = jsonObj.getJSONArray("products");
+                   // JSONArray products = jsonObj.getJSONArray("products");
+                    //
+                    JSONArray products = new JSONArray();
+
+                    try {
+                         products = (JSONArray) new JSONParser().parse(jsonStr);
+                    }catch (final ParseException  e) {
+
+                    }
 
                     // looping through All Contacts
                     for (int i = 0; i < products.length(); i++)
